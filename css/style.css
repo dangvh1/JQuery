@@ -1,0 +1,16 @@
+.form-input{
+    width: 400px;
+    background-color: aquamarine;
+    
+}
+#table td, #table th {
+    border: 2px solid rgb(0, 0, 0);
+    padding: 8px;
+}
+
+
+.button{
+    margin: 5px;
+}
+
+

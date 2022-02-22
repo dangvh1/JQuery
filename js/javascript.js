@@ -3,6 +3,8 @@ $(document).ready(function () {
     let list = [];
     let isEdit = false;
     let index = -1
+    var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+    var re = /^[a-zA-Z!@#\$%\^\&*\)\(+=._-]{2,}$/g;
 
     $("#save").click(function () {
         const name = $("#name").val();
@@ -13,8 +15,21 @@ $(document).ready(function () {
             alert("Nhập thiếu hoặc nhập sai! vui lòng kiểm tra lại");
             return 0;
         }
-        if(isNaN(phoneNumber)){
-            alert("phoneNumber must be a number");
+        if(name !==''){
+            if(re.test(name) == false){
+                alert("Tên không hợp lệ, Nhập lại")
+                return 0;
+            }else{
+                alert("tên hợp lệ")
+            }
+        }
+        if(phoneNumber !==''){
+            if(vnf_regex.test(phoneNumber)== false){
+                alert("số điện thoại không đúng định dạng, Nhập lại");
+                return 0;
+            }else{
+                alert("số điện thoại hợp lệ");
+            }
         }
         if (isEdit) {
             doUpdateInfo(name, birthday, phoneNumber, hometown);
@@ -56,6 +71,7 @@ $(document).ready(function () {
         isEdit = true;
     });
 
+
     function doUpdateInfo(name, birthday, phoneNumber, hometown) {
         list[index].name = name;
         list[index].birthday = birthday;
@@ -78,6 +94,7 @@ $(document).ready(function () {
         document.getElementById("phoneNumber").value = "";
         document.getElementById("hometown").value = "";
     }
+
 
 
 });

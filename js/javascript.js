@@ -4,7 +4,7 @@ $(document).ready(function () {
     let isEdit = false;
     let index = -1
     var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-    var re = /^[a-zA-Z!@#\$%\^\&*\)\(+=._-]{2,}$/g;
+    var re = /^[a-zA-Z !@#\$%\^\&*\)\(+=._-]{2,}$/g;
 
     $("#save").click(function () {
         const name = $("#name").val();
@@ -36,7 +36,7 @@ $(document).ready(function () {
             isEdit = false;
             return;
         }
-        confirm('confirm your information :\n'+name+"\n"+birthday+"\n"+phoneNumber+"\n"+hometown)
+        
 
         $("#table-data").append("<tr id='" + id + "'>" +
             "<td><button type='button' class='delete'>Delete</button><button type='button' class='edit'>Edit</button></td>" +

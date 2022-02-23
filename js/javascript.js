@@ -5,6 +5,30 @@ $(document).ready(function () {
     let index = -1
     var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     var re = /^[a-zA-Z !@#\$%\^\&*\)\(+=._-]{2,}$/g;
+    
+
+
+    $.getJSON("data.json", function(data){
+        const data = await fetch(data);
+        const response = await data.json();
+        response.student.map((i) => {
+            list.push(i);
+                $("#table-data").append("<tr id='" + i.id + "'>" +
+                "<td><button type='button' class='delete'>Delete</button><button type='button' class='edit'>Edit</button></td>" +
+                "<td class='no' style='display: none'>" + id + "</td>" +
+                "<td class='name'>" + i.name + "</td>" +
+                "<td class='birthday'>" + i.birthday + "</td>" +
+                "<td class='phoneNumber'>" + i.phoneNumber + "</td>" +
+                "<td class='hometown'>" + i.hometown + "</td>" +
+                "</tr>");
+            
+        });
+        })
+         .fail(function(){
+             console.log("An error has occurred.");
+        });
+
+
 
     $("#save").click(function () {
         const name = $("#name").val();
@@ -37,7 +61,6 @@ $(document).ready(function () {
             return;
         }
         
-
         $("#table-data").append("<tr id='" + id + "'>" +
             "<td><button type='button' class='delete'>Delete</button><button type='button' class='edit'>Edit</button></td>" +
             "<td class='no' style='display: none'>" + id + "</td>" +
@@ -50,6 +73,7 @@ $(document).ready(function () {
         list.push(ob);
         clearForm();
         id++;
+      
     });
 
     $('table').on('click', '.delete', function () {

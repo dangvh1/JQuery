@@ -6,30 +6,6 @@ $(document).ready(function () {
     var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     var re = /^[a-zA-Z !@#\$%\^\&*\)\(+=._-]{2,}$/g;
     
-
-
-    $.getJSON("data.json", function(data){
-        const data = await fetch(data);
-        const response = await data.json();
-        response.student.map((i) => {
-            list.push(i);
-                $("#table-data").append("<tr id='" + i.id + "'>" +
-                "<td><button type='button' class='delete'>Delete</button><button type='button' class='edit'>Edit</button></td>" +
-                "<td class='no' style='display: none'>" + id + "</td>" +
-                "<td class='name'>" + i.name + "</td>" +
-                "<td class='birthday'>" + i.birthday + "</td>" +
-                "<td class='phoneNumber'>" + i.phoneNumber + "</td>" +
-                "<td class='hometown'>" + i.hometown + "</td>" +
-                "</tr>");
-            
-        });
-        })
-         .fail(function(){
-             console.log("An error has occurred.");
-        });
-
-
-
     $("#save").click(function () {
         const name = $("#name").val();
         const birthday = $("#birthday").val();
@@ -75,6 +51,34 @@ $(document).ready(function () {
         id++;
       
     });
+
+    window.addEventListener('load', function () {
+        const url = "data.json";
+        console.log("sdsa");
+        const fetchJson = async () => {
+            try {
+                const data = await fetch("data.json");
+                const response = await data.json();
+                console.log(response);
+                response.student.map((i) => {
+                    list.push(i);
+                    $("#table-data").append("<tr id='" + i.id + "'>" +
+                    "<td><button type='button' class='delete'>Delete</button><button type='button' class='edit'>Edit</button></td>" +
+                        "<td class='no' style='display: none'>" + id + "</td>" +
+                        "<td class='name'>" + i.name + "</td>" +
+                        "<td class='birthday'>" + i.birthday + "</td>" +
+                        "<td class='phoneNumber'>" + i.phone + "</td>" +
+                        "<td class='hometown'>" + i.hometown + "</td>" +
+                        "</tr>");
+                    
+                })
+                console.log("abc")
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchJson();
+    }, false);
 
     $('table').on('click', '.delete', function () {
         const rowData = $(this).parents('tr');

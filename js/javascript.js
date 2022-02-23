@@ -53,8 +53,6 @@ $(document).ready(function () {
     });
 
     window.addEventListener('load', function () {
-        const url = "data.json";
-        console.log("sdsa");
         const fetchJson = async () => {
             try {
                 const data = await fetch("data.json");
@@ -64,20 +62,17 @@ $(document).ready(function () {
                     list.push(i);
                     $("#table-data").append("<tr id='" + i.id + "'>" +
                     "<td><button type='button' class='delete'>Delete</button><button type='button' class='edit'>Edit</button></td>" +
-                        "<td class='no' style='display: none'>" + id + "</td>" +
+                        "<td class='no' style='display: none'>" + i.id + "</td>" +
                         "<td class='name'>" + i.name + "</td>" +
                         "<td class='birthday'>" + i.birthday + "</td>" +
                         "<td class='phoneNumber'>" + i.phone + "</td>" +
                         "<td class='hometown'>" + i.hometown + "</td>" +
                         "</tr>");
-                    
                 })
-                console.log("abc")
             } catch (error) {
                 console.log(error);
             }
-        };
-        fetchJson();
+        };fetchJson();
     }, false);
 
     $('table').on('click', '.delete', function () {

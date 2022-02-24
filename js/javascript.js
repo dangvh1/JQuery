@@ -5,7 +5,7 @@ $(document).ready(function () {
     let index = -1
     var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     var re = /^[a-zA-Z\w\W !@#\$%\^\&*\)\(+=._-]{1,50}$/g;
-    
+
     $("#save").click(function () {
         const name = $("#name").val();
         const birthday = $("#birthday").val();
@@ -15,19 +15,19 @@ $(document).ready(function () {
             alert("Nhập thiếu hoặc nhập sai! vui lòng kiểm tra lại");
             return 0;
         }
-        if(name !==''){
-            if(re.test(name) == false){
+        if (name !== '') {
+            if (re.test(name) == false) {
                 alert("Tên không hợp lệ, Nhập lại")
                 return 0;
-            }else{
+            } else {
                 alert("tên hợp lệ")
             }
         }
-        if(phoneNumber !==''){
-            if(vnf_regex.test(phoneNumber)== false){
+        if (phoneNumber !== '') {
+            if (vnf_regex.test(phoneNumber) == false) {
                 alert("số điện thoại không đúng định dạng, Nhập lại");
                 return 0;
-            }else{
+            } else {
                 alert("số điện thoại hợp lệ");
             }
         }
@@ -36,9 +36,10 @@ $(document).ready(function () {
             isEdit = false;
             return;
         }
-        
+
         $("#table-data").append("<tr id='" + id + "'>" +
-            "<td><button type='button' class='delete'>Delete</button><button type='button' class='edit'>Edit</button></td>" +
+            "<td><button type='button' class='edit'>Edit</button></td>" +
+            "<td><input type=\"checkbox\" style=\"margin-left: 30%;\" value ='" + id + "'></td>"+
             "<td class='no' style='display: none'>" + id + "</td>" +
             "<td class='name'>" + name + "</td>" +
             "<td class='birthday'>" + birthday + "</td>" +
@@ -49,7 +50,7 @@ $(document).ready(function () {
         list.push(ob);
         clearForm();
         id++;
-      
+
     });
 
     window.addEventListener('load', function () {
@@ -61,26 +62,35 @@ $(document).ready(function () {
                 response.student.map((i) => {
                     list.push(i);
                     $("#table-data").append("<tr id='" + i.id + "'>" +
-                    "<td><button type='button' class='delete'>Delete</button><button type='button' class='edit'>Edit</button></td>" +
+                        "<td><button type='button' class='edit'>Edit</button></td>" +
+                        "<td><input type=\"checkbox\" style=\"margin-left: 30%;\" value ='" + i.id + "'></td>"+
                         "<td class='no' style='display: none'>" + i.id + "</td>" +
                         "<td class='name'>" + i.name + "</td>" +
                         "<td class='birthday'>" + i.birthday + "</td>" +
                         "<td class='phoneNumber'>" + i.phone + "</td>" +
                         "<td class='hometown'>" + i.hometown + "</td>" +
                         "</tr>");
+                        id++;
                 })
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
-        };fetchJson();
+        }; fetchJson();
     }, false);
 
-    $('table').on('click', '.delete', function () {
-        const rowData = $(this).parents('tr');
-        index = rowData.children('.no').text();
-        rowData.remove();
-        list.splice(index, 1);
-    });
+    $("#delete").click (function () {
+        var firm = confirm("Bạn có chắc chắn muốn xóa");
+        if(firm = 1){
+            for (const checkbox of document.querySelectorAll('input[type="checkbox"]')) {
+                if (checkbox.checked === true) {
+                    let check = checkbox.value;
+                    let rowData = $('#table').find('tr#' + check);
+                    rowData.remove();
+                    list.splice(check, 1);
+                }
+            }
+        }
+    })
 
     $('table').on('click', '.edit', function () {
         const rowData = $(this).parents('tr');
